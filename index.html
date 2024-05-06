@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -16,9 +16,15 @@
 
         body {
             width: 100%;
-            background: url(retro.jpg);
+            background: url(math.png), url(retro.jpg);
             background-repeat: no-repeat;
             background-size: cover;
+        
+        }
+
+
+        body url {
+          opacity:0.7;
         }
 
         #title {
@@ -32,11 +38,10 @@
             max-width: 600px;
             width: 90%;
             box-shadow: 1px 1px 5px white;
-            option: hover
 
-        {
+            option: hover {
             background-color: rgb(18, 133, 241);
-        }
+            }
 
         }
 
@@ -44,11 +49,22 @@
         #tabb {
             text-align: center;
         }
+
+        #tabella_int {
+            border-radius: 15px;
+        }
+
+
+        @media only screen and (max-width: 760px) {
+            body {
+                background-size:auto;
+            }
+        }
     </style>
 
 </head>
 <body>
-
+    
     <h1 id="title">La Matematica Facile!</h1>
 
     <section>
@@ -106,22 +122,18 @@
 
 
     <div class="container col-sm-6" id="tabb">
-        <div class="col-sm-6 mt-3 mx-auto bg-info">
+        <div class="col-sm-12 mt-3 mx-auto bg-info" id="tabella_int">
 
-            <h2>Tabellina dei numeri da 1 a 10</h2>
+            <h2>Tabellina dei numeri</h2>
 
             <h4>La tabellina di quale numero stai cercando?</h4>
 
             <input type="number" id="numb" />
-            <button onclick="calcolaTab()" type="button" class="btn btn-secondary">Mostra</button>
+            <button onclick="calcolaTab()" type="button" class="btn btn-secondary mb-2">Mostra</button>
 
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>*</th>
-                        <th>Valore</th>
-                    </tr>
-                </thead>
+            <button onclick="reset()" type="button" class="btn btn-primary mb-2">Reset</button>
+
+            <table class="table col-md-12">
                 <tbody id="tabella"></tbody>
             </table>
 
@@ -205,23 +217,34 @@
 
 
         function calcolaTab() {
-            var input = parseInt(document.getElementById("numb").value);
-            var tabellaHTML = "";
-            var i = 1;
+            var input = document.getElementById("numb").value.trim();
+            if (input === "") {
 
+                showAlert("Inserisci un numero per visualizzare la tabellina.");
+                return;
 
-
-            for (i = 1; i <= 10; i++) {
-
-                var tabellina = input * i;
-                tabellaHTML += "<tr><td>" + i + "</td><td>" + tabellina;
             }
 
-            document.getElementById("tabella").innerHTML = tabellaHTML;
 
+            input = parseInt(input);
+            var tabellaHTML = "<tr>"; // Apertura riga
+
+
+            for (var i = 1; i <= 10; i++) {
+                var tabellina = input * i;
+                tabellaHTML += "<td>" + i + " x " + input + " = " + tabellina + "</td>";
+            }
+
+            tabellaHTML += "</tr>"; // Chiusura riga
+            document.getElementById("tabella").innerHTML = tabellaHTML;
         }
 
+        function reset() {
 
+            document.getElementById("numb").value = "";
+            document.getElementById("tabella").innerHTML = "";
+
+        }
 
     </script>
 
